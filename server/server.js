@@ -32,15 +32,25 @@ app.use(
   })
 );
 
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
-  .split(',')
+const defaultOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://jobseeker-ecru.vercel.app',
+];
+
+const allowedOrigins = [...(process.env.CLIENT_URL || '').split(','), ...defaultOrigins]
   .map((origin) => origin.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .filter((origin, index, list) => list.indexOf(origin) === index);
+
+const vercelPreviewOrigin = /^https:\/\/jobseeker-[a-z0-9-]+\.vercel\.app$/i;
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      if (!origin || allowedOrigins.includes(origin) || vercelPreviewOrigin.test(origin)) {
+        return callback(null, true);
+      }
       return callback(new Error('Origin not allowed by CORS'));
     },
     credentials: true,
