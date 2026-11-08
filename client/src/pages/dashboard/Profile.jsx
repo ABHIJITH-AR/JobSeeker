@@ -11,6 +11,22 @@ import { getErrorMessage } from '../../services/api';
 import { EXPERIENCE_LEVELS, QUALIFICATIONS } from '../../utils/constants';
 import { toDateInput } from '../../utils/format';
 
+const buildForm = (data = {}) => ({
+  fullName: data.fullName || '',
+  phone: data.phone || '',
+  dateOfBirth: toDateInput(data.dateOfBirth),
+  address: data.address || '',
+  state: data.state || '',
+  district: data.district || '',
+  city: data.city || '',
+  education: data.education || '',
+  collegeName: data.collegeName || '',
+  graduationYear: data.graduationYear ? String(data.graduationYear) : '',
+  skills: (data.skills || []).join(', '),
+  experience: data.experience || '',
+  careerObjective: data.careerObjective || '',
+});
+
 export default function Profile() {
   const { user, refreshUser, updateUser } = useAuth();
   const toast = useToast();
@@ -29,21 +45,7 @@ export default function Profile() {
         if (!active) return;
         const data = response.data.profile || {};
         setProfile(data);
-        setForm({
-          fullName: data.fullName || '',
-          phone: data.phone || '',
-          dateOfBirth: toDateInput(data.dateOfBirth),
-          address: data.address || '',
-          state: data.state || '',
-          district: data.district || '',
-          city: data.city || '',
-          education: data.education || '',
-          collegeName: data.collegeName || '',
-          graduationYear: data.graduationYear ? String(data.graduationYear) : '',
-          skills: (data.skills || []).join(', '),
-          experience: data.experience || '',
-          careerObjective: data.careerObjective || '',
-        });
+        setForm(buildForm(data));
       })
       .catch((err) => toast.error(getErrorMessage(err, 'Unable to load your profile.')))
       .finally(() => {
@@ -57,6 +59,12 @@ export default function Profile() {
   const update = (key, value) => {
     setForm((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: '' }));
+  };
+
+  const handleReset = () => {
+    setForm(buildForm(profile));
+    setErrors({});
+    toast.info('Unsaved changes were discarded.');
   };
 
   const handlePhoto = async (event) => {
@@ -109,6 +117,7 @@ export default function Profile() {
       };
       const response = await userApi.updateProfile(payload);
       setProfile(response.data.profile);
+      setForm(buildForm(response.data.profile));
       updateUser((current) => ({
         ...current,
         name: response.data.profile.fullName || current.name,
@@ -281,7 +290,7 @@ export default function Profile() {
         </div>
 
         <div className="flex flex-wrap items-center justify-end gap-3">
-          <button type="button" className="btn-outline" onClick={() => window.location.reload()}>
+          <button type="button" className="btn-outline" onClick={handleReset}>
             Reset
           </button>
           <button type="submit" className="btn-primary" disabled={saving}>

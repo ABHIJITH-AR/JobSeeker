@@ -56,6 +56,21 @@ const emptyForm = {
   description: '',
 };
 
+const buildForm = (data = {}) => ({
+  companyName: data.companyName || '',
+  companyEmail: data.companyEmail || '',
+  contactNumber: data.contactNumber || '',
+  website: data.website || '',
+  industry: data.industry || '',
+  companySize: data.companySize || '',
+  foundedYear: data.foundedYear ? String(data.foundedYear) : '',
+  address: data.address || '',
+  state: data.state || '',
+  district: data.district || '',
+  city: data.city || '',
+  description: data.description || '',
+});
+
 export default function CompanyProfile() {
   const { user, updateUser } = useAuth();
   const toast = useToast();
@@ -76,20 +91,7 @@ export default function CompanyProfile() {
         if (!active) return;
         const data = response.data.profile || {};
         setProfile(data);
-        setForm({
-          companyName: data.companyName || '',
-          companyEmail: data.companyEmail || '',
-          contactNumber: data.contactNumber || '',
-          website: data.website || '',
-          industry: data.industry || '',
-          companySize: data.companySize || '',
-          foundedYear: data.foundedYear ? String(data.foundedYear) : '',
-          address: data.address || '',
-          state: data.state || '',
-          district: data.district || '',
-          city: data.city || '',
-          description: data.description || '',
-        });
+        setForm(buildForm(data));
       })
       .catch((err) => toast.error(getErrorMessage(err, 'Unable to load your company profile.')))
       .finally(() => {
@@ -107,6 +109,16 @@ export default function CompanyProfile() {
   const update = (key, value) => {
     setForm((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: '' }));
+  };
+
+  const handleReset = () => {
+    setForm(buildForm(profile));
+    setErrors({});
+    setLogoFile(null);
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview('');
+    if (fileRef.current) fileRef.current.value = '';
+    toast.info('Unsaved changes were discarded.');
   };
 
   const handleLogo = (event) => {
@@ -166,6 +178,7 @@ export default function CompanyProfile() {
       }
 
       setProfile(response.data.profile);
+      setForm(buildForm(response.data.profile));
       updateUser((current) => ({ ...current, profile: { ...(current.profile || {}), ...response.data.profile } }));
       setLogoFile(null);
       if (preview) URL.revokeObjectURL(preview);
@@ -359,7 +372,7 @@ export default function CompanyProfile() {
         </div>
 
         <div className="flex flex-wrap items-center justify-end gap-3">
-          <button type="button" className="btn-outline" onClick={() => window.location.reload()}>
+          <button type="button" className="btn-outline" onClick={handleReset}>
             Reset
           </button>
           <button type="submit" className="btn-primary" disabled={saving}>

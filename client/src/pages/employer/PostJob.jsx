@@ -42,6 +42,7 @@ const buildEmptyForm = () => ({
   responsibilities: '',
   skills: '',
   qualification: '',
+  ageLimit: '',
   experience: '',
   experienceMin: '',
   jobType: 'Full Time',
@@ -120,6 +121,7 @@ export default function PostJob() {
             responsibilities: (data.responsibilities || []).join('\n'),
             skills: (data.skills || []).join(', '),
             qualification: data.qualification || '',
+            ageLimit: data.ageLimit || '',
             experience: data.experience || '',
             experienceMin: data.experienceMin ? String(data.experienceMin) : '',
             jobType: data.jobType || 'Full Time',
@@ -271,6 +273,7 @@ export default function PostJob() {
       responsibilities: form.responsibilities,
       skills: form.skills,
       qualification: form.qualification,
+      ageLimit: government ? form.government.ageLimit.trim() : form.ageLimit.trim(),
       experience: form.experience,
       experienceMin: form.experienceMin || 0,
       salaryMin: form.salaryMin || null,
@@ -497,6 +500,15 @@ export default function PostJob() {
                   <option key={item} value={item}>{item}</option>
                 ))}
               </Select>
+              {!government && (
+                <Input
+                  label="Age limit (optional)"
+                  value={form.ageLimit}
+                  onChange={(event) => update('ageLimit', event.target.value)}
+                  placeholder="e.g. 18 - 35 years"
+                  help="Applicable age range for this role."
+                />
+              )}
               <Select label="Experience" value={form.experience} onChange={(event) => update('experience', event.target.value)}>
                 <option value="">Select experience</option>
                 {experienceLevels.map((item) => (

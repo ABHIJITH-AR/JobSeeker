@@ -41,6 +41,7 @@ const jobSchema = new mongoose.Schema(
     responsibilities: { type: [String], default: [] },
     skills: { type: [String], default: [] },
     qualification: { type: String, trim: true, default: '' },
+    ageLimit: { type: String, trim: true, default: '' },
     experience: { type: String, trim: true, default: '' },
     experienceMin: { type: Number, default: 0, min: 0, max: 60 },
     salaryMin: { type: Number, default: null, min: 0 },

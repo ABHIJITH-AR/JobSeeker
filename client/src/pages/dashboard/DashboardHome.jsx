@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   Bell,
@@ -24,6 +24,8 @@ import { formatDate, timeAgo } from '../../utils/format';
 
 export default function DashboardHome() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState('');
   const [applications, setApplications] = useState([]);
   const [counts, setCounts] = useState({});
   const [totalApplications, setTotalApplications] = useState(0);
@@ -61,6 +63,12 @@ export default function DashboardHome() {
   const completion = profile.completion || 0;
   const hasResume = Boolean(profile.hasResume || (profile.resume && profile.resume.filename));
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = keyword.trim();
+    navigate(query ? `/jobs?q=${encodeURIComponent(query)}` : '/jobs');
+  };
+
   return (
     <div className="space-y-6">
       <div className="card flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center sm:p-6">
@@ -85,6 +93,26 @@ export default function DashboardHome() {
           </Link>
         </div>
       </div>
+
+      <form onSubmit={handleSearch} className="card flex flex-col gap-2.5 p-2.5 sm:flex-row sm:items-center">
+        <div className="relative flex-1">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <label htmlFor="dashboard-job-search" className="sr-only">
+            Search jobs
+          </label>
+          <input
+            id="dashboard-job-search"
+            className="input h-11 pl-10"
+            placeholder="Search jobs by title, skill or company"
+            value={keyword}
+            onChange={(event) => setKeyword(event.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn-primary h-11 px-5">
+          <Search className="h-4 w-4" />
+          Search Jobs
+        </button>
+      </form>
 
       {(!hasResume || completion < 100) && (
         <div className="card border-amber-200 bg-amber-50/60 p-5">

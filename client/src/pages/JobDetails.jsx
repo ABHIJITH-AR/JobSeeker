@@ -107,6 +107,8 @@ export default function JobDetails() {
     return [
       { label: 'Job type', value: job.jobType, icon: Briefcase },
       { label: 'Work mode', value: job.workMode, icon: MonitorSmartphone },
+      { label: 'Qualification', value: job.qualification || 'Any', icon: GraduationCap },
+      { label: 'Age limit', value: job.ageLimit || job.government?.ageLimit || 'Not specified', icon: CalendarClock },
       { label: 'Experience', value: job.experience || 'Any experience', icon: Clock },
       { label: 'Vacancies', value: job.vacancies ? formatNumber(job.vacancies) : '—', icon: Users },
       { label: 'Posted', value: formatDate(job.postedDate), icon: CalendarClock },
@@ -394,7 +396,7 @@ export default function JobDetails() {
                 </>
               )}
 
-              {(job.qualification || job.experience) && (
+              {(job.qualification || job.experience || (job.ageLimit && !government)) && (
                 <>
                   <h3 className="mt-6 text-base font-bold text-ink">Eligibility</h3>
                   <div className="mt-2 space-y-2 text-sm leading-6 text-slate-600">
@@ -402,6 +404,12 @@ export default function JobDetails() {
                       <p className="flex items-start gap-2">
                         <GraduationCap className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                         <span><strong className="font-semibold text-ink">Qualification:</strong> {job.qualification}</span>
+                      </p>
+                    )}
+                    {job.ageLimit && !government && (
+                      <p className="flex items-start gap-2">
+                        <CalendarClock className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                        <span><strong className="font-semibold text-ink">Age limit:</strong> {job.ageLimit}</span>
                       </p>
                     )}
                     {job.experience && (

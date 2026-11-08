@@ -266,6 +266,7 @@ const createJob = asyncHandler(async (req, res) => {
     category,
     description,
     qualification,
+    ageLimit,
     experience,
     jobType,
     workMode,
@@ -320,6 +321,7 @@ const createJob = asyncHandler(async (req, res) => {
     responsibilities: parseArray(responsibilities) || [],
     skills: parseArray(skills) || [],
     qualification: qualification || '',
+    ageLimit: ageLimit || '',
     experience: experience || '',
     experienceMin: parseNumber(req.body.experienceMin) || 0,
     salaryMin: parseNumber(req.body.salaryMin),
@@ -366,6 +368,7 @@ const createJob = asyncHandler(async (req, res) => {
     }
 
     job.companyName = organization;
+    if (!job.ageLimit) job.ageLimit = g.ageLimit || req.body.ageLimit || '';
     job.government = {
       organization,
       department: g.department || req.body.department || '',
@@ -435,6 +438,7 @@ const updateJob = asyncHandler(async (req, res) => {
     'category',
     'description',
     'qualification',
+    'ageLimit',
     'experience',
     'salaryText',
     'jobType',
@@ -490,6 +494,7 @@ const updateJob = asyncHandler(async (req, res) => {
     if (g.applicationStartDate !== undefined) gov.applicationStartDate = g.applicationStartDate ? new Date(g.applicationStartDate) : null;
     if (g.examDate !== undefined) gov.examDate = g.examDate ? new Date(g.examDate) : null;
     job.government = gov;
+    if (!job.ageLimit) job.ageLimit = gov.ageLimit || '';
     if (gov.organization) job.companyName = gov.organization;
   }
 
