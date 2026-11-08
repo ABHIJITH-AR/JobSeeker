@@ -27,7 +27,7 @@ async function buildProfile(user) {
 }
 
 const register = asyncHandler(async (req, res) => {
-  const { name, email, phone, password, role, companyName, companyEmail, contactNumber, website, city, state } = req.body;
+  const { name, email, phone, password, role, companyName, companyEmail, contactNumber, website, city, district, state } = req.body;
 
   if (!['jobseeker', 'employer'].includes(role)) {
     return res.status(400).json({ success: false, message: 'Account type must be Job Seeker or Employer.' });
@@ -57,6 +57,7 @@ const register = asyncHandler(async (req, res) => {
         fullName: name.trim(),
         phone: phone.trim(),
         state: state || '',
+        district: district || '',
         city: city || '',
       });
     } else {
@@ -67,6 +68,7 @@ const register = asyncHandler(async (req, res) => {
         contactNumber: contactNumber || phone,
         website: website || '',
         city: city || '',
+        district: district || '',
         state: state || '',
       });
     }

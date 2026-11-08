@@ -30,6 +30,7 @@ const initialForm = {
   contactNumber: '',
   website: '',
   state: '',
+  district: '',
   city: '',
 };
 
@@ -37,7 +38,7 @@ export default function Register() {
   const { user, register } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
-  const { states, citiesFor, loading: locationsLoading } = useLocations();
+  const { states, districtsFor, citiesFor, loading: locationsLoading } = useLocations();
   const [role, setRole] = useState('jobseeker');
   const [form, setForm] = useState(initialForm);
   const [showPassword, setShowPassword] = useState(false);
@@ -87,6 +88,7 @@ export default function Register() {
         confirmPassword: form.confirmPassword,
         role,
         state: form.state,
+        district: form.district,
         city: form.city,
       };
       if (role === 'employer') {
@@ -106,7 +108,8 @@ export default function Register() {
   };
 
   const isEmployer = role === 'employer';
-  const cities = form.state ? citiesFor(form.state) : [];
+  const districts = form.state ? districtsFor(form.state) : [];
+  const cities = form.state ? citiesFor(form.state, form.district) : [];
 
   return (
     <section className="grid min-h-[calc(100vh-4rem)] lg:grid-cols-2">
@@ -267,7 +270,7 @@ export default function Register() {
               </div>
             )}
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-3">
               <div>
                 <label className="label" htmlFor="register-state">State / UT</label>
                 <select
@@ -276,12 +279,31 @@ export default function Register() {
                   value={form.state}
                   onChange={(event) => {
                     update('state', event.target.value);
+                    update('district', '');
                     update('city', '');
                   }}
                   disabled={locationsLoading}
                 >
                   <option value="">Select State / UT</option>
                   {states.map((item) => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="label" htmlFor="register-district">District</label>
+                <select
+                  id="register-district"
+                  className="input"
+                  value={form.district}
+                  onChange={(event) => {
+                    update('district', event.target.value);
+                    update('city', '');
+                  }}
+                  disabled={!form.state}
+                >
+                  <option value="">Select District</option>
+                  {districts.map((item) => (
                     <option key={item} value={item}>{item}</option>
                   ))}
                 </select>
