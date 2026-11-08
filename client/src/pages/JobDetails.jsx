@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   AlertCircle,
@@ -52,6 +52,7 @@ export default function JobDetails() {
   const [applyError, setApplyError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [saving, setSaving] = useState(false);
+  const applyRedirectedRef = useRef(false);
 
   useEffect(() => {
     let active = true;
@@ -78,8 +79,20 @@ export default function JobDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (searchParams.get('apply') === '1') setApplyOpen(true);
-  }, [searchParams]);
+    if (searchParams.get('apply') !== '1') return;
+    if (user?.role === 'jobseeker') {
+      setApplyOpen(true);
+      return;
+    }
+    if (applyRedirectedRef.current) return;
+    applyRedirectedRef.current = true;
+    if (user) {
+      toast.error('Only job seeker accounts can apply for jobs.');
+    } else {
+      toast.error('Please register or log in to apply for jobs.');
+      navigate('/login', { state: { from: `/jobs/${id}?apply=1` } }, { replace: true });
+    }
+  }, [searchParams, user, id, navigate, toast]);
 
   useEffect(() => {
     if (!job) return undefined;
@@ -127,14 +140,19 @@ export default function JobDetails() {
 
   const requireJobSeeker = () => {
     if (!user) {
-      navigate('/login', { state: { from: `/jobs/${id}` } });
+      toast.error('Please register or log in to apply for jobs.');
+      navigate('/login', { state: { from: `/jobs/${id}?apply=1` } });
       return false;
     }
     if (user.role !== 'jobseeker') {
-      toast.info('Only job seeker accounts can apply for jobs.');
+      toast.error('Only job seeker accounts can apply for jobs.');
       return false;
     }
     return true;
+  };
+
+  const openApply = () => {
+    if (requireJobSeeker()) setApplyOpen(true);
   };
 
   const handleApply = async (event) => {
@@ -174,11 +192,12 @@ export default function JobDetails() {
 
   const handleSave = async () => {
     if (!user) {
+      toast.error('Please register or log in to save jobs.');
       navigate('/login', { state: { from: `/jobs/${id}` } });
       return;
     }
     if (user.role !== 'jobseeker') {
-      toast.info('Only job seeker accounts can save jobs.');
+      toast.error('Only job seeker accounts can save jobs.');
       return;
     }
     setSaving(true);
@@ -332,7 +351,7 @@ export default function JobDetails() {
                       {applyLabel}
                     </button>
                   ) : (
-                    <button type="button" className="btn-primary" onClick={() => setApplyOpen(true)}>
+                    <button type="button" className="btn-primary" onClick={openApply}>
                       <Send className="h-4 w-4" />
                       {applyLabel}
                     </button>
@@ -566,7 +585,7 @@ export default function JobDetails() {
               </div>
 
               {open && !job.hasApplied && (
-                <button type="button" className="btn-primary mt-5 w-full" onClick={() => setApplyOpen(true)}>
+                <button type="button" className="btn-primary mt-5 w-full" onClick={openApply}>
                   <Send className="h-4 w-4" />
                   {government ? 'Track Government Application' : 'Apply Now'}
                 </button>

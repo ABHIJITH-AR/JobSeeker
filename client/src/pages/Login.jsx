@@ -152,12 +152,12 @@ export default function Login() {
             <p className="rounded-lg border border-line p-3">
               <BadgeCheck className="mx-auto mb-1 h-4 w-4 text-brand" />
               Job seeker looking for work?
-              <Link to="/register" className="mt-0.5 block font-semibold text-brand">Create a job seeker account</Link>
+              <Link to="/register" state={location.state} className="mt-0.5 block font-semibold text-brand">Create a job seeker account</Link>
             </p>
             <p className="rounded-lg border border-line p-3">
               <ShieldCheck className="mx-auto mb-1 h-4 w-4 text-brand" />
               Employer hiring candidates?
-              <Link to="/register" className="mt-0.5 block font-semibold text-brand">Create an employer account</Link>
+              <Link to="/register" state={location.state} className="mt-0.5 block font-semibold text-brand">Create an employer account</Link>
             </p>
           </div>
         </div>

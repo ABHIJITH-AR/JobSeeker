@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   BadgeCheck,
@@ -38,6 +38,7 @@ export default function Register() {
   const { user, register } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
   const { states, districtsFor, citiesFor, loading: locationsLoading } = useLocations();
   const [role, setRole] = useState('jobseeker');
   const [form, setForm] = useState(initialForm);
@@ -99,7 +100,8 @@ export default function Register() {
       }
       const created = await register(payload);
       toast.success('Account created successfully. Welcome to JobSeeker!');
-      navigate(dashboardPath(created.role), { replace: true });
+      const from = location.state?.from;
+      navigate(from || dashboardPath(created.role), { replace: true });
     } catch (err) {
       setFormError(getErrorMessage(err, 'Unable to create your account. Please try again.'));
     } finally {
