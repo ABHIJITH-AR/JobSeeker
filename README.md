@@ -134,8 +134,8 @@ ADMIN_PHONE=9999999999
 Copy `client/.env.example` to `client/.env`. In development the Vite dev server proxies `/api` and `/uploads` to `http://localhost:5000`, so the defaults work out of the box.
 
 ```env
-VITE_API_URL=/api
-VITE_SERVER_URL=
+VITE_API_URL
+VITE_SERVER_URL
 ```
 
 ### 4. Seed the database
