@@ -110,12 +110,8 @@ NODE_ENV=development
 PORT=5000
 CLIENT_URL=http://localhost:5173
 
-# Local MongoDB
-MONGO_URI=mongodb://127.0.0.1:27017/jobseeker
-# Or MongoDB Atlas
-# MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/jobseeker?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/jobseeker?retryWrites=true&w=majority
 
-# Must be at least 32 characters — the server refuses to start otherwise
 JWT_SECRET=replace-this-with-a-long-random-secret-at-least-32-characters
 JWT_EXPIRES_IN=7d
 
@@ -129,7 +125,7 @@ ADMIN_PASSWORD=ChangeMe@12345
 ADMIN_PHONE=9999999999
 ```
 
-### 3. Configure the client environment (optional)
+### 3. Configure the client environment
 
 Copy `client/.env.example` to `client/.env`. In development the Vite dev server proxies `/api` and `/uploads` to `http://localhost:5000`, so the defaults work out of the box.
 
