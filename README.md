@@ -6,7 +6,7 @@ India's all-in-one portal for **private and government jobs**. JobSeeker connect
 
 ## Features
 
-### Job Seekers
+**Job Seekers**
 - Search and filter jobs by keyword, category, location, qualification, experience, job type, and work mode
 - Browse private jobs, government jobs, companies, and detailed job pages
 - Register / login with role-based access
@@ -15,13 +15,13 @@ India's all-in-one portal for **private and government jobs**. JobSeeker connect
 - Track application status (Submitted → Under Review → Shortlisted → Rejected / Hired)
 - Save jobs and receive notifications
 
-### Employers
+**Employers**
 - Company profile management with logo upload
 - Post, edit, and manage job listings
 - Review applicants and update application status
 - Dashboard with hiring stats
 
-### Administrators
+**Administrators**
 - Manage users, employers, and jobs
 - Approve / reject job postings
 - Verify government job notifications
