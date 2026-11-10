@@ -82,10 +82,12 @@ export default function DashboardLayout({ role = 'jobseeker' }) {
     return match?.label || 'Dashboard';
   }, [items, location.pathname]);
 
+  const loginPath = role === 'admin' ? '/admin/login' : role === 'employer' ? '/employer/login' : '/login';
+
   const handleLogout = async () => {
     await logout();
     toast.info('You have been logged out.');
-    navigate('/login');
+    navigate(loginPath, { replace: true });
   };
 
   return (
@@ -104,7 +106,7 @@ export default function DashboardLayout({ role = 'jobseeker' }) {
         }`}
       >
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-5">
-          <Logo variant="light" />
+          <Logo variant="light" portal={role} />
           <button
             type="button"
             onClick={() => setOpen(false)}

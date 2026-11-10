@@ -13,6 +13,8 @@ import CompanyDetails from './pages/CompanyDetails';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import AdminLogin from './pages/AdminLogin';
+import EmployerLogin from './pages/EmployerLogin';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import DashboardHome from './pages/dashboard/DashboardHome';
@@ -41,6 +43,9 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/employer/login" element={<EmployerLogin />} />
+
         <Route element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="/jobs" element={<FindJobs />} />

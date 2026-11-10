@@ -40,7 +40,7 @@ export default function Register() {
   const navigate = useNavigate();
   const location = useLocation();
   const { states, districtsFor, citiesFor, loading: locationsLoading } = useLocations();
-  const [role, setRole] = useState('jobseeker');
+  const [role, setRole] = useState(location.state?.role === 'employer' ? 'employer' : 'jobseeker');
   const [form, setForm] = useState(initialForm);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
