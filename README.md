@@ -6,7 +6,7 @@ India's all-in-one portal for **private and government jobs**. JobSeeker connect
 
 ## Features
 
-**JobSeekers**
+**Job Seekers**
 - Search and filter jobs by keyword, category, location, qualification, experience, job type, and work mode
 - Browse private jobs, government jobs, companies, and detailed job pages
 - Register / login with role-based access
@@ -95,7 +95,7 @@ JobSeeker/
 
 ```bash
 git clone <your-repository-url>
-cd "Job Seeker"
+cd "JobSeeker"
 npm run install:all
 ```
 
@@ -253,3 +253,5 @@ Serve `client/dist` through your web server / CDN and point `VITE_API_URL` (or `
 ## License
 
 This project is provided for educational and personal use. Add a license of your choice before distributing publicly.
+
+--
