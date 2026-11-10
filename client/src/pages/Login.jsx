@@ -162,10 +162,8 @@ export default function Login() {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-muted">
-            <span>Dedicated portals:</span>
+            <span>Hiring instead?</span>
             <Link to="/employer/login" className="font-semibold text-brand hover:underline">Employer sign in</Link>
-            <span aria-hidden="true">•</span>
-            <Link to="/admin/login" className="font-semibold text-brand hover:underline">Admin sign in</Link>
           </div>
         </div>
       </div>
