@@ -50,7 +50,7 @@ const NAVIGATION = {
     { label: 'Manage Users', to: '/admin/users', icon: Users },
     { label: 'Manage Employers', to: '/admin/employers', icon: Building2 },
     { label: 'Manage Jobs', to: '/admin/jobs', icon: Briefcase },
-    { label: 'Post Government Job', to: '/admin/post-job', icon: PlusCircle },
+    { label: 'Post a Job', to: '/admin/post-job', icon: PlusCircle },
     { label: 'Pending Approvals', to: '/admin/pending-approvals', icon: ShieldCheck },
     { label: 'Government Verification', to: '/admin/government-verification', icon: BadgeCheck },
     { label: 'Applications', to: '/admin/applications', icon: ClipboardList },

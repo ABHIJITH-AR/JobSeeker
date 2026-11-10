@@ -86,7 +86,7 @@ export default function PostJob() {
 
   const [meta, setMeta] = useState(null);
   const [job, setJob] = useState(null);
-  const [sector, setSector] = useState(isAdmin && !editing ? 'government' : 'private');
+  const [sector, setSector] = useState('private');
   const [form, setForm] = useState(buildEmptyForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
@@ -365,7 +365,7 @@ export default function PostJob() {
 
       {isAdmin && !editing && (
         <div className="card p-4 sm:p-5">
-          <p className="label">Job sector</p>
+          <p className="label">Choose job sector: Private or Government</p>
           <div className="mt-2 inline-flex rounded-lg border border-line bg-slate-50 p-1">
             {[
               { key: 'government', label: 'Government', icon: ShieldCheck },

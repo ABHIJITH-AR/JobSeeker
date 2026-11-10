@@ -31,7 +31,7 @@ const QUICK_ACTIONS = [
   { to: '/admin/government-verification', label: 'Government verification', icon: BadgeCheck, description: 'Verify official vacancies' },
   { to: '/admin/applications', label: 'Applications', icon: ClipboardList, description: 'All candidate applications' },
   { to: '/admin/messages', label: 'Messages', icon: MessageSquare, description: 'Contact form enquiries' },
-  { to: '/admin/post-job', label: 'Post government job', icon: PlusCircle, description: 'Publish an official vacancy' },
+  { to: '/admin/post-job', label: 'Post a job', icon: PlusCircle, description: 'Private or government vacancy' },
 ];
 
 export default function AdminDashboard() {
