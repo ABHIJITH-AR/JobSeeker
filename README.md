@@ -253,5 +253,3 @@ Serve `client/dist` through your web server / CDN and point `VITE_API_URL` (or `
 ## License
 
 This project is provided for educational and personal use. Add a license of your choice before distributing publicly.
-
---
