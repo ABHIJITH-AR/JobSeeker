@@ -119,9 +119,9 @@ MAX_RESUME_MB=5
 MAX_LOGO_MB=2
 
 # Admin bootstrap (used by `npm run seed` / `npm run create-admin`)
-ADMIN_NAME=Site Administrator
-ADMIN_EMAIL=admin@jobseeker.in
-ADMIN_PASSWORD=ChangeMe@12345
+ADMIN_NAME=Admin
+ADMIN_EMAIL=admin@gmail.com
+ADMIN_PASSWORD=xxxxxxxx
 ADMIN_PHONE=9999999999
 ```
 
