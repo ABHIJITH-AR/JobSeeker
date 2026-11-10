@@ -6,7 +6,7 @@ India's all-in-one portal for **private and government jobs**. JobSeeker connect
 
 ## Features
 
-**Job Seekers**
+**JobSeekers**
 - Search and filter jobs by keyword, category, location, qualification, experience, job type, and work mode
 - Browse private jobs, government jobs, companies, and detailed job pages
 - Register / login with role-based access
@@ -53,7 +53,7 @@ India's all-in-one portal for **private and government jobs**. JobSeeker connect
 ## Project Structure
 
 ```
-Job Seeker/
+JobSeeker/
 ├── client/                 # React + Vite frontend
 │   ├── public/             # Static assets (favicon)
 │   ├── src/
